@@ -4,6 +4,10 @@
 # are quite tightly linked as (hopefully) indicated in the
 # comments
 #
+from __future__ import division
+from __future__ import print_function
+from builtins import object
+from past.utils import old_div
 import re
 import cmath
 
@@ -37,7 +41,7 @@ def main():
     for paper in sorted_papers:
         p    = paper.date() + 1j*(1.55-i*0.01)
 
-        phi  = pi/2-i*pi*0.8/(len(sorted_papers))
+        phi  = old_div(pi,2)-i*pi*0.8/(len(sorted_papers))
         dir=cmath.rect(1,phi)
         dir = dir.real*13 + 1j*dir.imag
         
@@ -47,10 +51,10 @@ def main():
         else         : length = 0.7-0.02*(24-11) + 0.01*(i-24)
         arr2 = arr1 + length*dir
         #print phi, arr1, arr2
-        print >>pts, p.real, p.imag, i, paper.process, ";", paper.short_author()
-        print >>lab, "set arrow {} from {},{} to {},{} nohead lc rgb {}".format(i+1,arr1.real,arr1.imag,arr2.real,arr2.imag,colours[i%len(colours)])
-        print >>lab, "set label {} '{},{}' at {},{} ".format(i+101,paper.short_process(),
-                                                             paper.short_author(),arr2.real+0.05,arr2.imag)
+        print(p.real, p.imag, i, paper.process, ";", paper.short_author(), file=pts)
+        print("set arrow {} from {},{} to {},{} nohead lc rgb {}".format(i+1,arr1.real,arr1.imag,arr2.real,arr2.imag,colours[i%len(colours)]), file=lab)
+        print("set label {} '{},{}' at {},{} ".format(i+101,paper.short_process(),
+                                                             paper.short_author(),arr2.real+0.05,arr2.imag), file=lab)
         i += 1
 
 #----------------------------------------------------------------------
@@ -79,7 +83,7 @@ def get_colours():
     
         
 #----------------------------------------------------------------------    
-class Paper:
+class Paper(object):
     def __init__(self,authors,arxiv,process):
         self.authors = authors
         self.arxiv   = arxiv
@@ -90,7 +94,7 @@ class Paper:
         month = int(self.arxiv[2:4])
         if (year > 80): year += 1900
         else          : year += 2000
-        return year + (month-0.5)/12.0
+        return year + old_div((month-0.5),12.0)
         
     def short_author(self):
         if (self.authors.count(",") <= 2):
