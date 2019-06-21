@@ -115,7 +115,7 @@ class Paper(object):
     
 #----------------------------------------------------------------------    
 def read_papers():
-    with open("nnlo-refs-2017-04.tex") as f:
+    with open("nnlo-refs-2019-05.tex") as f:
         lines = f.readlines()
 
     process=""

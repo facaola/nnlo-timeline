@@ -1,7 +1,7 @@
 # gnuplot
 
 set term pdfcairo enhanced lw 1.5 size 30cm,20cm font "helvetica,14"
-set output 'timeline-info-2017-04.pdf'
+set output 'timeline-info-2019-05.pdf'
 
 print "hello"
 system("./timeline-info.py")
@@ -29,8 +29,8 @@ set size 0.6
 set format x '{/*1.9 %.0f}'
 set xtics offset 0,-1
 set mxtics 2
-set yrange [1.1:2]
-set xrange [2001:2017.5]
+set yrange [0.8:2]
+set xrange [2001:2020.5]
 mod(a,b)=int(a - b*int(a/b) + 0.5)
 
 load 'timeline-info.labels'
